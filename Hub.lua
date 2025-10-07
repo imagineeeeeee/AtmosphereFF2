@@ -3541,7 +3541,7 @@ end)
 		t2:Slider("Jump Power Strength", {
 			Default  = 50,
 			Min		 = 50,
-			Max		 = 70,
+			Max		 = 100,
 			Callback = function(v)
 				jps = v
 			end,
