@@ -70,8 +70,8 @@ end
 -- // Instances
 
 
-local TyrantUI = Instance.new("ScreenGui", RS:IsStudio() and game.Players.LocalPlayer.PlayerGui or gethui())
-TyrantUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local AtmosphereUI = Instance.new("ScreenGui", RS:IsStudio() and game.Players.LocalPlayer.PlayerGui or gethui())
+AtmosphereUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 function Ocean:NewWindow()
 
@@ -84,7 +84,7 @@ function Ocean:NewWindow()
 		Name = "Main",
 		Position = UDim2.fromScale(0.248, 0.220),
 		Size = UDim2.fromScale(0.350, 0.550),
-		Parent = TyrantUI,
+		Parent = AtmosphereUI,
 		BackgroundColor3 = Color3.fromRGB(5, 11, 19),
 		BorderSizePixel = 0,
 		ZIndex = 1
@@ -838,14 +838,13 @@ end
 --// Main Loop
 task.spawn(function()
     CatchRight = Character:WaitForChild("CatchRight")
-    while task.wait() do
+    while task.wait(0.05) do
         if on then
             for Index, Object in next, workspace:GetChildren() do
                     if on then
                     if Object:IsA("BasePart") and Object.Name == "Football" then
 						if msVersion == "Magnets V1" then
 							local Distance = (HumanoidRootPart.Position - Object.Position).Magnitude
-								if string.find(getexecutorname(), "Solara") or string.find(getexecutorname(), "Wind") or string.find(getexecutorname(), "Zorara")   then
 									if magType == "Legit" then
 											if (Distance <= legmagdist) then
 												CustomFireTouchInterest(CatchRight, Object, 1)
@@ -933,7 +932,6 @@ task.spawn(function()
 											end
 										elseif magType == "Leauge" then
 											if (Distance <= leaugdist) then
-
 												firetouchinterest(CatchRight, Object, 1)
 												firetouchinterest(CatchRight, Object, 1)
 												task.wait()
@@ -951,20 +949,20 @@ task.spawn(function()
 										end
 									end
 								end
-							else
-								workspace.ChildAdded:Connect(function(child)
-									if child.Name == "Football" and child:IsA("BasePart") and on then
-										child.CanCollide = false
-										child.Size = Vector3.new(msSecondVerRange, msSecondVerRange, msSecondVerRange)
-									end
-								end)
-							end
+						else
+							workspace.ChildAdded:Connect(function(child)
+								if child.Name == "Football" and child:IsA("BasePart") and on then
+									child.CanCollide = false
+									child.Size = Vector3.new(msSecondVerRange, msSecondVerRange, msSecondVerRange)
+								end
+							end)
 						end
-                    end
-                end
-            end
-        end
-    end)
+					end
+				end
+			end
+		end
+	
+end) 
     
 
 	local on3;
@@ -1621,7 +1619,7 @@ local state = false
 	local function CalculateRouteofPlayer(Playa)
 		--[[local MovingCheck = isMoving(getNearestPlayerToMouse())--]]
 		local RouteType;
-		if not string.find(Playa.Name, "bot 1") and not string.find(Playa.Name, "bot 3") then
+
 			local DirectionMoving = Playa.Character:FindFirstChild("Humanoid").MoveDirection
 			local DirectionMovingLeftRight = Playa.Character:FindFirstChild("Humanoid").MoveDirection.X
 			local DirectionMovingFoward = Playa.Character:FindFirstChild("Humanoid").MoveDirection.Z
@@ -1655,9 +1653,7 @@ local state = false
 			if DirectionDot < 0 then
 				RouteType = "Comeback"
 			end
-		else
-			RouteType = "Straight"
-		end
+
 		return RouteType
 	end
 	
@@ -1893,7 +1889,7 @@ local Highestpwrmode = false
 				local count = 0
 				local playerPos = player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character.HumanoidRootPart.Position
 				if not playerPos then return count end
-				if game.PlaceId == 8206123457 then
+				if game.PlaceId == 8204899140 then
 					for _, otherPlayer in ipairs(Players:GetPlayers()) do
 						if otherPlayer ~= player and otherPlayer.Character and otherPlayer ~= Player  then
 							local otherPos = otherPlayer.Character:FindFirstChild("HumanoidRootPart").Position
@@ -1918,7 +1914,7 @@ local Highestpwrmode = false
 			return count
 		end
 	
-		if game.PlaceId == 8206123457 then
+		if game.PlaceId == 8204899140 then
 			for _, player in ipairs(Players:GetPlayers()) do
 				if player.Character and not isBot(player.Name) and player ~= Player then
 					local nearbyCount = countPlayersNearby(player)
@@ -2103,7 +2099,7 @@ local Highestpwrmode = false
 	
 	local function getPeopleGuardingClosestToMouse(WR)
 		local ClosestCB, MaxDistance = nil, 9e9
-		if game.PlaceId == 8206123457 then
+		if game.PlaceId == 8204899140 then
 			for index, CB in next, Players:GetPlayers() do
 				if CB ~= WR and CB ~= Player then
 					if CB:IsA("Player") and CB.Character then
@@ -2157,7 +2153,7 @@ local Highestpwrmode = false
 	local function getClosestCBtoBot(BotHere)
 		local CbBot;
 		for index, CBBot in next, workspace:GetChildren() do
-			if game.PlaceId == 8206123457 and CBBot.Name == "npcwr" then
+			if game.PlaceId == 8204899140 and CBBot.Name == "npcwr" then
 			local A = CBBot["a"]
 			local B = CBBot["b"]
 			local ACBBot = A["bot 2"]
@@ -2480,7 +2476,7 @@ local Highestpwrmode = false
 								throwingpar.Color = Color3.fromRGB(0, 0, 0)
 								throwingpar.Anchored = false
 	game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
-		if game.PlaceId ~= 8206123457 then
+		if game.PlaceId ~= 8204899140 then
 			if input.UserInputType == Enum.UserInputType.MouseButton1 and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Message.Text == "HIKE" and game:GetService("ReplicatedStorage").Values.Status.Value == "InPlay" and game:GetService("ReplicatedStorage").Values.Throwable and not gameProcessedEvent then
 					if Char then
 						local Football = Char:FindFirstChildOfClass("Tool")
@@ -2592,10 +2588,7 @@ local Highestpwrmode = false
 
 								local RemoteEvent = Football.Handle:FindFirstChild("RemoteEvent")
 								if RemoteEvent then
-									local ThrowAnimation = Char.Humanoid:LoadAnimation(game:GetService("ReplicatedStorage").Animations.Throw)
-									ThrowAnimation.Name = "Throw"
-									ThrowAnimation:Play()
-									RemoteEvent:fireServer("Clicked", start, neworigin + ThrowingTab.Direction * 10000, (game.PlaceId == 8206123457 and PowerSir) or 95, PowerSir)
+									RemoteEvent:fireServer("Clicked", start, neworigin + ThrowingTab.Direction * 10000, (game.PlaceId == 8204899140 and PowerSir) or 95, PowerSir)
 									
 								else
 							   
@@ -2610,7 +2603,7 @@ local Highestpwrmode = false
 				   
 					end
 				end
-			elseif game.PlaceId == 8206123457 then
+			elseif game.PlaceId == 8204899140 then
 				if input.UserInputType == Enum.UserInputType.MouseButton1 and not gameProcessedEvent then
 					if Char then
 						local Football = Char:FindFirstChildOfClass("Tool")
@@ -2723,10 +2716,7 @@ local Highestpwrmode = false
 
 								local RemoteEvent = Football.Handle:FindFirstChild("RemoteEvent")
 								if RemoteEvent then
-									local ThrowAnimation = Char.Humanoid:LoadAnimation(game:GetService("ReplicatedStorage").Animations.Throw)
-									ThrowAnimation.Name = "Throw"
-									ThrowAnimation:Play()
-									RemoteEvent:fireServer("Clicked", start, neworigin + ThrowingTab.Direction * 10000, (game.PlaceId == 8206123457 and PowerSir) or 95, PowerSir)
+									RemoteEvent:fireServer("Clicked", start, neworigin + ThrowingTab.Direction * 10000, (game.PlaceId == 8204899140 and PowerSir) or 95, PowerSir)
 								else
 									
 								end 
@@ -2872,15 +2862,15 @@ local Highestpwrmode = false
 				local TargetPosition;
 				
 				if (string.find(ClosestPlr.Name, "bot 1") or string.find(ClosestPlr.Name, "bot 3")) then
-					if game.PlaceId == 8206123457 then
+					if game.PlaceId == 8204899140 then
 						TargetPosition = BotEstimatedVel(TOF, ClosestPlr)
-					elseif game.PlaceId ~= 8206123457 then
+					elseif game.PlaceId ~= 8204899140 then
 						TargetPosition = KeepPosInBounds(BotEstimatedVel(TOF, ClosestPlr), 70.5, 175.5)
 					end
 				else
-					if game.PlaceId == 8206123457 then
+					if game.PlaceId == 8204899140 then
 						TargetPosition = GetTargetPositionForWR(TOF, ClosestPlr)
-					elseif game.PlaceId ~= 8206123457 then
+					elseif game.PlaceId ~= 8204899140 then
 						TargetPosition = KeepPosInBounds(GetTargetPositionForWR(TOF, ClosestPlr), 70.5, 175.5)
 					end
 				end
@@ -3001,7 +2991,7 @@ local Highestpwrmode = false
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local aRushOn = false
-if game.PlaceId ~= 8206123457 then
+if game.PlaceId ~= 8204899140 then
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local LocalPlayer = Players.LocalPlayer
 local charplr = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
@@ -3254,7 +3244,7 @@ local BeOn = false
 		t1:Slider("Pull Vector Strength", {
 			Default  = 1,
 			Min		 = 1,
-			Max		 = 30,
+			Max		 = 100,
 			Callback = function(v)
 				pvstrength = v
 			end,
@@ -3262,7 +3252,7 @@ local BeOn = false
 		t1:Slider("Pull Vector Distance", {
 			Default  = 1,
 			Min		 = 1,
-			Max		 = 30,
+			Max		 = 100,
 			Callback = function(v)
 				pvdist = v
 			end,
